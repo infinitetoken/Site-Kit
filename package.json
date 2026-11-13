@@ -1,6 +1,6 @@
 {
   "name": "@infinitetoken/site-kit",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Nuxt layer shared by Infinite Token's websites: platform chips that link a product to every store it's in",
   "keywords": [
     "nuxt",
