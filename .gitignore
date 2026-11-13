@@ -1,0 +1,7 @@
+node_modules/
+dist/
+coverage/
+.yalc/
+yalc.lock
+*.tsbuildinfo
+*.tgz

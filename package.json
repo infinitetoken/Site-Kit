@@ -1,0 +1,63 @@
+{
+  "name": "@infinitetoken/site-kit",
+  "version": "0.1.0",
+  "description": "Nuxt layer shared by Infinite Token's websites: platform chips that link a product to every store it's in",
+  "keywords": [
+    "nuxt",
+    "nuxt-layer",
+    "vue"
+  ],
+  "homepage": "https://github.com/infinitetoken/Site-Kit#readme",
+  "bugs": {
+    "url": "https://github.com/infinitetoken/Site-Kit/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/infinitetoken/Site-Kit.git"
+  },
+  "license": "MIT",
+  "author": "Jay Deaton",
+  "sideEffects": false,
+  "type": "module",
+  "exports": {
+    ".": "./nuxt.config.ts",
+    "./package.json": "./package.json",
+    "./platforms": "./app/utils/platforms.ts"
+  },
+  "main": "nuxt.config.ts",
+  "files": [
+    "app"
+  ],
+  "scripts": {
+    "fix": "eslint . --fix",
+    "lint": "eslint .",
+    "release": "git push --follow-tags",
+    "release:major": "npm version major && npm run release",
+    "release:minor": "npm version minor && npm run release",
+    "release:patch": "npm version patch && npm run release",
+    "test": "vitest run",
+    "typecheck": "vue-tsc --noEmit",
+    "verify": "npm run lint && npm run typecheck && npm test",
+    "preversion": "npm run verify"
+  },
+  "prettier": "@infinitetoken/eslint-config/prettier",
+  "devDependencies": {
+    "@infinitetoken/eslint-config": "^0.2.1",
+    "@vitejs/plugin-vue": "^6.0.11",
+    "@vue/test-utils": "^2.5.1",
+    "eslint": "^10.14.0",
+    "happy-dom": "^21.0.4",
+    "nuxt": "^4.6.4",
+    "typescript": "^6.0.3",
+    "vitest": "^5.1.0",
+    "vue": "^3.5.45",
+    "vue-tsc": "^3.3.14"
+  },
+  "peerDependencies": {
+    "nuxt": "^4.0.0",
+    "vue": "^3.5.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}
