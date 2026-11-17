@@ -47,3 +47,7 @@ const lumber: Platforms = {
 ## License
 
 MIT. The icons are Lucide's, under the ISC License; see [LICENSE](LICENSE).
+
+---
+
+Made by [Infinite Token](https://www.infinitetoken.com), the team behind [Lumber](https://lumber.infinitetoken.com): end-to-end encrypted logging.
