@@ -5,6 +5,7 @@ import { mount } from '@vue/test-utils'
 import { describe, expect, it } from 'vitest'
 
 import AppIcon from '../app/components/AppIcon.vue'
+import { APP_ICONS, APP_SLUGS } from '../app/utils/apps'
 import { GAME_ICONS, GAME_SLUGS } from '../app/utils/games'
 
 describe('AppIcon', () => {
@@ -49,5 +50,21 @@ describe('GAME_ICONS', () => {
 
   it('shows a tile only for the games whose app icon is the same in light and dark mode', () => {
     expect(GAME_SLUGS.filter((slug) => GAME_ICONS[slug].tile)).toEqual(['hexfleet', 'cardtastic'])
+  })
+})
+
+describe('APP_ICONS', () => {
+  it('has an icon for every app, each file in the layer', () => {
+    expect(Object.keys(APP_ICONS)).toEqual([...APP_SLUGS])
+    for (const { src } of Object.values(APP_ICONS)) {
+      expect(src).toMatch(/^\/site-kit\/apps\/[a-z-]+\.png$/)
+      // Vitest runs in the package's root
+      expect(existsSync(resolve(`public${src}`)), src).toBe(true)
+    }
+  })
+
+  // Lumber's and SlingScan's app icons are the same in light and dark mode
+  it('draws each app as a tile', () => {
+    for (const slug of APP_SLUGS) expect(APP_ICONS[slug].tile, slug).toBe(true)
   })
 })

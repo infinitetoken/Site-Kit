@@ -1,6 +1,6 @@
 # @infinitetoken/site-kit
 
-A Nuxt 4 layer shared by Infinite Token's websites (www.infinitetoken.com, games.infinitetoken.com and jaydeaton.com). It holds what those sites would otherwise copy between them: platform chips, one row per product that names every platform it's on and links each to its store or download page, and the games' icons, so every site draws each game the same way.
+A Nuxt 4 layer shared by Infinite Token's websites (www.infinitetoken.com, games.infinitetoken.com and jaydeaton.com). It holds what those sites would otherwise copy between them: platform chips, one row per product that names every platform it's on and links each to its store or download page, and the apps' and games' icons, so every site draws each one the same way.
 
 ## Install
 
@@ -44,7 +44,7 @@ const lumber: Platforms = {
 
 `platformChips(platforms)`, `PLATFORMS` and `PLATFORM_LABELS` are exported for sites that lay chips out themselves.
 
-## Game icons
+## App and game icons
 
 ```ts
 import { GAME_ICONS } from '@infinitetoken/site-kit/games'
@@ -58,6 +58,7 @@ const hexfleet = { name: 'HexFleet', icon: GAME_ICONS.hexfleet }
 
 - **`GAME_ICONS`:** each game's icon by slug (`hexfleet`, `hangman`, `cardtastic`, `dueltastic`, `pucktastic` and `swirlio`, listed in `GAME_SLUGS` in the sites' order). The images are 192px PNGs the layer serves from `/site-kit/games/`, so a site needs no copies of its own.
 - **Which art:** a game whose app icon is the same in light and dark mode shows that icon as a tile (HexFleet, CardTastic). One whose app icon changes with the mode shows its transparent splash art, which reads on light and dark cards alike, and Swirlio's has a version for light pages.
+- **`APP_ICONS`:** the same for the apps (`lumber` and `slingscan`, in `APP_SLUGS`), from `@infinitetoken/site-kit/apps`, served from `/site-kit/apps/`. Both apps' icons are the same in light and dark mode, so both are tiles.
 - **`AppIcon`:** draws any `AppIconImage` (`{ src, light?, tile? }`), a game's or a site's own, at `size` CSS pixels. A `tile` is rounded like a home screen icon, with a faint ring. It's decorative (`alt=""`), so put the name beside it.
 - **`color-mode`:** `'dark'` (the default) for a dark-only site, which always draws `src`; `'auto'` for a site with light and dark modes, which draws `light` unless `<html>` has the `dark` class, as [@nuxtjs/color-mode](https://color-mode.nuxtjs.org) sets it.
 
