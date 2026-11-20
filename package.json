@@ -1,7 +1,7 @@
 {
   "name": "@infinitetoken/site-kit",
   "version": "0.1.1",
-  "description": "Nuxt layer shared by Infinite Token's websites: platform chips that link a product to every store it's in",
+  "description": "Nuxt layer shared by Infinite Token's websites: platform chips that link a product to every store it's in, and the games' icons",
   "keywords": [
     "nuxt",
     "nuxt-layer",
@@ -21,12 +21,14 @@
   "type": "module",
   "exports": {
     ".": "./nuxt.config.ts",
+    "./games": "./app/utils/games.ts",
     "./package.json": "./package.json",
     "./platforms": "./app/utils/platforms.ts"
   },
   "main": "nuxt.config.ts",
   "files": [
-    "app"
+    "app",
+    "public"
   ],
   "scripts": {
     "fix": "eslint . --fix",

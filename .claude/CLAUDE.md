@@ -20,7 +20,7 @@ npm run release:patch / :minor / :major   # Jay's release flow: bump, tag, push;
 ## Layout
 
 - `nuxt.config.ts` is the layer's config (empty) and the package's `main`. Write `main` without a leading `./`: with `./nuxt.config.ts`, npm 11 left the file out of the tarball although `package-json/no-redundant-files` says `main` is always packed, so the layer would have published without its config.
-- `app/` is the layer's source (Nuxt 4's default `srcDir`, for layers too): `app/components` and `app/utils` are auto-imported in every site that extends it. `./platforms` is also exported for a site's data files, which import its types (`import type { Platforms } from '@infinitetoken/site-kit/platforms'`). The package ships TypeScript and SFCs as source; Nuxt transpiles layers.
+- `app/` is the layer's source (Nuxt 4's default `srcDir`, for layers too): `app/components` and `app/utils` are auto-imported in every site that extends it. `./platforms` and `./games` are also exported for a site's data files, which import its types (`import type { Platforms } from '@infinitetoken/site-kit/platforms'`). The package ships TypeScript and SFCs as source; Nuxt transpiles layers.
 - Components import each other explicitly (`PlatformChips` imports `PlatformIcon`), so the tests can mount them without Nuxt.
 
 ## Platform chips
@@ -30,6 +30,13 @@ npm run release:patch / :minor / :major   # Jay's release flow: bump, tag, push;
 - The icons are device shapes from Lucide (ISC, notice in `LICENSE`), not brand logos: Apple's trademark rules keep its logo off third-party pages outside its official badges, and the old InfiniteToken-WWW badges used it.
 - Styling is scoped plain CSS driven by `currentColor` (`color-mix` for borders and hover), so a site sets one text color on the component and it fits dark-only InfiniteToken-WWW and Games-Web and light/dark jaydeaton.com without Tailwind scanning `node_modules`.
 - The caption defaults to "Available On" (Title Case, Jay's rule for UI copy).
+
+## Game icons (2026-11-20, Jay)
+
+- The three sites drew each game's icon their own way from their own copies: www the app icon in a rounded square (CardTastic's still the black icon from before its felt came back on 2026-11-05), the hub and jaydeaton.com the transparent splash art, except jaydeaton.com's HexFleet, its app icon as a tile. Jay: "there shouldn't be any differences at all", so the icons and the component that draws them live here.
+- `GAME_ICONS` (`app/utils/games.ts`, also exported as `./games` for the sites' data files) maps each game's slug to an `AppIconImage`; the images are in `public/site-kit/games/` (Nuxt serves a layer's `public/`, so the sites' builds carry them; `files` ships `public`). The rule, Jay's: a game whose app icon is the same in light and dark mode is drawn as that icon, a tile (HexFleet's `icon.png`, CardTastic's `icon-dark.png`, which equals its `icon-light.png`); one whose icon changes with the mode is drawn as its transparent `splash-dark.png` (Hangman, DuelTastic, PuckTastic), and Swirlio, whose white spiral vanishes on white, carries its black `light-splash.png` as `light`. Each is `sips -Z 192` of the game repo's file: render it again when a game's icon or splash changes, and a test checks the tile rule still picks HexFleet and CardTastic.
+- `AppIcon` is jaydeaton.com's old `AppIcon.vue` moved here, in plain CSS: a tile is rounded to 22% with a faint ring (black 5% on light, white 10% on dark). `color-mode="auto"` (jaydeaton.com) draws both images and lets `:root.dark` pick one, as @nuxtjs/color-mode sets the class (`classSuffix: ''`); the default, `'dark'`, draws only `src`, since www's @nuxt/ui can put a `light` class on `<html>` although the site is dark-only. Its style block isn't scoped (BEM names) so the `:root.dark` rules reach it.
+- A new game gets its slug in `GAME_SLUGS` (in the sites' order), its image, and its entry, then a release; each site then points its card at `GAME_ICONS.<slug>`.
 
 ## Dependencies
 
