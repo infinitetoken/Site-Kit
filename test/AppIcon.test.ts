@@ -63,8 +63,8 @@ describe('APP_ICONS', () => {
     }
   })
 
-  // Lumber's and SlingScan's app icons are the same in light and dark mode
-  it('draws each app as a tile', () => {
-    for (const slug of APP_SLUGS) expect(APP_ICONS[slug].tile, slug).toBe(true)
+  // Full-bleed icons are tiles; transparent glyphs and round logos are drawn bare
+  it('draws a tile only for the full-bleed icons', () => {
+    expect(APP_SLUGS.filter((slug) => APP_ICONS[slug].tile)).toEqual(['lumber', 'slingscan', 'grapdf', 'pixel-designer', 'snapdf', 'trimbox'])
   })
 })
