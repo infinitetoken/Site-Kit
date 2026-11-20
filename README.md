@@ -1,6 +1,6 @@
 # @infinitetoken/site-kit
 
-A Nuxt 4 layer shared by Infinite Token's websites (www.infinitetoken.com, games.infinitetoken.com and jaydeaton.com). It holds what those sites would otherwise copy between them: platform chips, one row per product that names every platform it's on and links each to its store or download page, and the apps' and games' icons, so every site draws each one the same way.
+A Nuxt 4 layer shared by Infinite Token's websites (www.infinitetoken.com, games.infinitetoken.com and jaydeaton.com). It holds what those sites would otherwise copy between them: the Infinite Token logo, its animated ring stack and the favicons; the pinned nav's tracking of which section is in view; platform chips, one row per product that names every platform it's on and links each to its store or download page; and the apps' and games' icons, so every site draws each one the same way.
 
 ## Install
 
@@ -15,7 +15,22 @@ export default defineNuxtConfig({
 })
 ```
 
-Nuxt auto-imports the layer's components and utils, the same as the site's own.
+Nuxt auto-imports the layer's components, composables and utils, the same as the site's own, and serves its `public/` files under `/site-kit/`.
+
+## Logo
+
+- **Files:** `/site-kit/brand/logo.svg` (the three stacked rings, for a header or footer), `/site-kit/brand/ring.svg` (one ring, the official vector) and the favicons, `/site-kit/brand/favicon.svg`, `favicon.ico` (48px) and `favicon.png` (192px, for crawlers that want a PNG). Link the favicons from the site's `app.head`, and redirect `/favicon.ico` to the `.ico` for browsers that ask for it without a link.
+- **`<LogoStack />`:** the animated logo: rings drop onto a stack of three, one at a time, on a canvas. `width` sets its drawn width in CSS pixels (160 by default); its height follows. It's decorative (`aria-hidden`), and it fades in once the ring has loaded.
+
+## Section nav
+
+```ts
+const { current, jump, toTop, update } = useSectionNav(['apps', 'games', 'about', 'team'])
+```
+
+For a pinned nav whose tabs are the page's sections, given their element ids in page order. `current` is the section in view (the last one whose top has reached its `scroll-margin-top`, or the last one at the bottom of the page), for the tab to mark; `jump(id)` scrolls to a section, smoothly unless the visitor asks for reduced motion; `toTop()` scrolls to the top; `update()` measures again (after the page changes). It follows the window or a scrolling ancestor of the sections.
+
+- **`firstIsTop`:** pass `{ firstIsTop: true }` when the first section is the top of the page: it's current from the start, and its tab scrolls to the very top. Without it, as when a hero comes first, nothing is current until a section reaches the nav.
 
 ## Platform chips
 

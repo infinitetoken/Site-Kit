@@ -20,7 +20,7 @@ npm run release:patch / :minor / :major   # Jay's release flow: bump, tag, push;
 ## Layout
 
 - `nuxt.config.ts` is the layer's config (empty) and the package's `main`. Write `main` without a leading `./`: with `./nuxt.config.ts`, npm 11 left the file out of the tarball although `package-json/no-redundant-files` says `main` is always packed, so the layer would have published without its config.
-- `app/` is the layer's source (Nuxt 4's default `srcDir`, for layers too): `app/components` and `app/utils` are auto-imported in every site that extends it. `./platforms`, `./games` and `./apps` are also exported for a site's data files, which import its types (`import type { Platforms } from '@infinitetoken/site-kit/platforms'`). The package ships TypeScript and SFCs as source; Nuxt transpiles layers.
+- `app/` is the layer's source (Nuxt 4's default `srcDir`, for layers too): `app/components`, `app/composables` and `app/utils` are auto-imported in every site that extends it, and `public/` is served, always under `public/site-kit/` so nothing lands on a site's own paths (a layer `favicon.ico` at the root would have shown the rings on jaydeaton.com). `./platforms`, `./games` and `./apps` are also exported for a site's data files, which import its types (`import type { Platforms } from '@infinitetoken/site-kit/platforms'`). The package ships TypeScript and SFCs as source; Nuxt transpiles layers.
 - Components import each other explicitly (`PlatformChips` imports `PlatformIcon`), so the tests can mount them without Nuxt.
 
 ## Platform chips
@@ -30,6 +30,11 @@ npm run release:patch / :minor / :major   # Jay's release flow: bump, tag, push;
 - The icons are device shapes from Lucide (ISC, notice in `LICENSE`), not brand logos: Apple's trademark rules keep its logo off third-party pages outside its official badges, and the old InfiniteToken-WWW badges used it.
 - Styling is scoped plain CSS driven by `currentColor` (`color-mix` for borders and hover), so a site sets one text color on the component and it fits dark-only InfiniteToken-WWW and Games-Web and light/dark jaydeaton.com without Tailwind scanning `node_modules`.
 - The caption defaults to "Available On" (Title Case, Jay's rule for UI copy).
+
+## Logo and section nav (2026-11-20, Jay)
+
+- Moved in from www and the games site, which kept identical copies by hand: `LogoStack.vue` (Games-Web copied it 2026-10-22, when Jay chose copying over a shared package "while there are two"), now loading `/site-kit/brand/ring.svg`, and `public/site-kit/brand/`: `logo.svg` (the ring stacked three times, one ring `1022 * 19/96 * 0.75` = 152 units below the last, LogoStack's spacing), `ring.svg`, and the favicons (`favicon.svg` the logo centered in a square, `favicon.ico` 48px and `favicon.png` 192px rendered from it). jaydeaton.com has its own favicons. The sites link the favicons from `app.head` and redirect `/favicon.ico`.
+- `useSectionNav` (`app/composables/`) is the three sites' copies merged: www's and the games site's (a hero first, so nothing current until a section reaches the nav) and jaydeaton.com's (`firstIsTop: true`: the first section is the top of the page, current from the start, its tab scrolling to the very top). Each site had kept its copy "in step" by hand. Its tests came from jaydeaton.com's `sectionNav.test.ts`. The header markup stays in each site: www's and the games site's are alike but carry their own tabs and button, and jaydeaton.com's is another design.
 
 ## Game icons (2026-11-20, Jay)
 

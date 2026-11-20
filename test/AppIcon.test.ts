@@ -68,3 +68,10 @@ describe('APP_ICONS', () => {
     expect(APP_SLUGS.filter((slug) => APP_ICONS[slug].tile)).toEqual(['lumber', 'slingscan', 'grapdf', 'pixel-designer', 'snapdf', 'trimbox'])
   })
 })
+
+describe('brand', () => {
+  // The rings: the header's and footer's logo, LogoStack's ring and the favicons, served from the layer
+  it('ships the logo, the ring and the favicons', () => {
+    for (const file of ['logo.svg', 'ring.svg', 'favicon.svg', 'favicon.ico', 'favicon.png']) expect(existsSync(resolve(`public/site-kit/brand/${file}`)), file).toBe(true)
+  })
+})
