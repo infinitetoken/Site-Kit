@@ -1,6 +1,6 @@
 {
   "name": "@infinitetoken/site-kit",
-  "version": "0.4.0",
+  "version": "0.5.0",
   "description": "Nuxt layer shared by Infinite Token's websites: the logo, its animated ring stack and the favicons, the pinned nav's section tracking, platform chips, and the apps' and games' icons",
   "keywords": [
     "nuxt",
